@@ -7,11 +7,6 @@ module top(
     output wire [31:0] mem_data_out_debug,
     output wire        regWrite_debug
 );
-assign pc_debug          = pc_out;
-assign alu_out_debug     = alu_out;
-assign reg_file_A_debug  = reg_file_A;
-assign mem_data_out_debug = mem_data_out;
-assign regWrite_debug    = regWrite;
 wire       pcWrite;
 wire       pcWriteCond;
 wire       IorD;
@@ -35,6 +30,11 @@ wire    [3:0] alu_sel;
 wire    [4:0]rs1, rs2, rd;
 reg [31:0] mem_data_reg_out;
 reg [31:0] alu_in_1,  alu_in_2, alu_reg_out;
+assign pc_debug          = pc_out;
+assign alu_out_debug     = alu_out;
+assign reg_file_A_debug  = reg_file_A;
+assign mem_data_out_debug = mem_data_out;
+assign regWrite_debug    = regWrite;
 assign pc_enable = pcWrite | (pcWriteCond & alu_zero);
 pc pc_1(
     .in(pc_in),

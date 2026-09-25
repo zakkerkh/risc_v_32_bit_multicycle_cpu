@@ -79,14 +79,19 @@ always @ (*) begin
     case(current)
     FETCH: begin
         memRead = 1;
-        aluSrcB = 2'b01;
-        pcWrite = 1;
+        aluSrcB = 2'b01;   // ALU computes PC+4 into alu_reg_out
+        // PC is deliberately NOT written here. RV32I branch targets are
+        // relative to the branch instruction's own address, so pc_out must
+        // still hold the un-incremented PC when DECODE computes PC+imm.
     end
     FETCH_W: begin
-        irWrite = 1; 
+        irWrite = 1;
+        aluSrcB = 2'b01;   // keep PC+4 alive in alu_reg_out through the wait
     end
     DECODE: begin
-        aluSrcB = 2'b10;
+        aluSrcB  = 2'b10;  // ALU computes the branch target PC+imm
+        pcSource = 1;      // ...while alu_reg_out (still PC+4) retires
+        pcWrite  = 1;      //    into the PC
     end
     MEM: begin
         aluSrcA = 1;

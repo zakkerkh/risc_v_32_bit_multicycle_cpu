@@ -1,6 +1,3 @@
-# Local Claude Code tool config (not part of the project)
-.claude/
-
 # Unit test suite / integration probes / ModelSim scratch build output
 # (not yet part of the remote repo)
 tb/
